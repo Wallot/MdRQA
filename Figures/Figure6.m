@@ -1,9 +1,10 @@
 % This script reproduces Figure 6 in:
 %
-% Wallot, S., Roepstorff, A., & M{\o}nster, D. (2016). Multidimensional
-%  Recurrence Quantification Analysis (MdRQA) for the analysis of
-%  multidimensional time-series in MATLAB and its application to group-
-%  level data in joint action. Frontiers in Psychology, ???
+% Wallot, S., Roepstorff, A., & Mønster, D. (2016). Multidimensional
+% Recurrence Quantification Analysis (MdRQA) for the analysis of
+% multidimensional time-series: A software implementation in MATLAB and its
+% application to group-level data in joint action. Frontiers in Psychology,
+% 7, 1835. http://dx.doi.org/10.3389/fpsyg.2016.01835
 %
 % Depends on:
 % -Signal Processing Toolbox
