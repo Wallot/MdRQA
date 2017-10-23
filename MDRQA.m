@@ -1,4 +1,4 @@
-function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE,PSADJUST)
+function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
 % mdrqa
 %  computes a recurrence plot for a multi-dimensional time-series and
 %  performs recurrence quantification:
@@ -41,14 +41,6 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE,PSA
 %    1 - z-score columns of DATA
 %  The default value is ZSCORE = 0.
 %
-%  PSADJUST indicates, whehter the phase-space distance should be
-%  normalized by the number the number of phase-space dimensions to make
-%  thresholds/radii comparable between phase-spaces of different
-%  dimensionality:
-%   0 - no noramlization of phase-space distance
-%   1 - normalize phase-space distance by dimensionality
-%  The default value is PSADJUST = 0.
-%
 %
 % Outputs:
 %
@@ -77,7 +69,7 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE,PSA
 %
 % Reference:
 %
-% Wallot, S., Roepstorff, A., & Mønster, D. (2016). Multidimensional
+% Wallot, S., Roepstorff, A., & MÃ¸nster, D. (2016). Multidimensional
 % Recurrence Quantification Analysis (MdRQA) for the analysis of
 % multidimensional time-series: A software implementation in MATLAB and its
 % application to group-level data in joint action. Frontiers in Psychology,
@@ -87,7 +79,12 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE,PSA
 %
 % v1.0, 28. July 2016
 % by Sebastian Wallot, Max Planck Insitute for Empirical Aesthetics, Frankfurt, Germany
-%  & Dan Mønster, Aarhus University, Aarhus, Denmark
+%  & Dan MÃ¸nster, Aarhus University, Aarhus, Denmark
+%
+% v1.1, 23. October 2017
+%  - Fixed bug: now 'non' rescaling is possible
+%  - removed input: PSADJUST.
+%  S.W.
 
 if exist('DATA') % check whether input data has been specified - if not, throw error message
 else
@@ -111,7 +108,7 @@ else
 end
 
 if exist('NORM')  % check whether NORM has been specified - if not, set NORM = 'euc'; if yes, check whether specification is appropriate
-    if NORM == 'euc' | NORM == 'min' | NORM == 'max'
+    if NORM == 'euc' | NORM == 'min' | NORM == 'max' | NORM == 'non'
     else
         error('No appropriate norm parameter specified.');
     end
@@ -145,13 +142,7 @@ PARAMETERS={DIM,EMB,DEL,RAD,NORM,ZSCORE}; % store parameters
 
 a=pdist2(DATA,DATA); % create distance matrix and recurrence matirx
 a=abs(a)*-1;
-% if exist('PSADJUST') % check whether PSADJUST has been specified - if not, don't normalize phase-space distances by dimensionality
-%     if PSADJUST == 0
-%     else
-% a=-sqrt((a.^2)-(2*(EMB*DIM)));
-%     end
-% else
-% end
+
 if NORM == 'euc'
     b=mean(a(a<0));
     %b=-sqrt(abs(((b^2)+2*(DIM*EMB))));
