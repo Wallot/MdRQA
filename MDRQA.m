@@ -69,7 +69,7 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
 %
 % Reference:
 %
-% Wallot, S., Roepstorff, A., & Mønster, D. (2016). Multidimensional
+% Wallot, S., Roepstorff, A., & MÃ¸nster, D. (2016). Multidimensional
 % Recurrence Quantification Analysis (MdRQA) for the analysis of
 % multidimensional time-series: A software implementation in MATLAB and its
 % application to group-level data in joint action. Frontiers in Psychology,
@@ -79,12 +79,26 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
 %
 % v1.0, 28. July 2016
 % by Sebastian Wallot, Max Planck Insitute for Empirical Aesthetics, Frankfurt, Germany
-%  & Dan Mønster, Aarhus University, Aarhus, Denmark
+%  & Dan MÃ¸nster, Aarhus University, Aarhus, Denmark
 %
 % v1.1, 23. October 2017
 %  - Fixed bug: now 'non' rescaling is possible
 %  - removed input: PSADJUST.
 %  S.W.
+%
+% v1.2, 27. February 2018
+%  - fixed codting mistake for default setting of norm parameter
+%  - removed piece of unused and out-commented code
+%  - added "Software info" section
+%  S.W.
+
+% Software info:
+%
+% The authors give no warranty for the correct functioning of the software
+% and cannot be held legally accountable.
+%
+% This code is free and can be distributed and/or modified under the GNU
+% General Public License version 2 or later (Free Software Foundation)
 
 if exist('DATA') % check whether input data has been specified - if not, throw error message
 else
@@ -113,7 +127,7 @@ if exist('NORM')  % check whether NORM has been specified - if not, set NORM = '
         error('No appropriate norm parameter specified.');
     end
 else
-    NORM == 'euc';
+    NORM = 'euc';
 end
 
 if exist('RAD') % check whether RAD has been specified - if not, set arbitarily RAD = 1
@@ -145,7 +159,6 @@ a=abs(a)*-1;
 
 if NORM == 'euc'
     b=mean(a(a<0));
-    %b=-sqrt(abs(((b^2)+2*(DIM*EMB))));
     a=a/abs(b);
 elseif NORM == 'min'
     b=max(a(a<0));
