@@ -192,8 +192,8 @@ set_fonts(gcf, gca, fontsize);
 % MDRQA
 subplot(3,4,4+8)
 data = [xx, yy, zz];
-[rp, mdrqa] = MDRQA(data,3,...
-    T, 0, 'euc', 0.8*radius, 0, 0);
+%(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
+[rp, mdrqa] = MDRQA(data, 3, 3, T, 'euc', 0.8*radius, 0);
 rp = flipud(rp);
 spy(rp, 'k');
 axis xy;
