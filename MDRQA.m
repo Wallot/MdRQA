@@ -1,4 +1,4 @@
-function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
+function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,EMB,DEL,NORM,RAD,ZSCORE)
 % mdrqa
 %  computes a recurrence plot for a multi-dimensional time-series and
 %  performs recurrence quantification:
@@ -9,10 +9,6 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
 %
 %  DATA is a double-variable with each dimension of the to-be-analyzed
 %  signal as a row of numbers in a separate column.
-%
-%  DIM is the dimensionality of the signal (i.e., the number of colums that
-%  should be read from the variable starting from the first).
-%  The default value is DIM = 1.
 %
 %  EMB is the number of embedding dimensions (i.e., EMB = 1 would be no
 %  embedding via time-delayed surrogates, just using the provided number of
@@ -91,6 +87,13 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
 %  - removed piece of unused and out-commented code
 %  - added "Software info" section
 %  S.W.
+%
+% v1.3, 30. May 2018
+%  - removed superfluous DIM input parameter; instead of asking for an
+%    input specifying the dimensionality of the data, the dimensionality is
+%    now calculated from the structure of the input directly (i.e.,
+%    dimensionality of the time-series = number of columns of the input data)
+%  S.W.
 
 % Software info:
 %
@@ -103,12 +106,6 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
 if exist('DATA') % check whether input data has been specified - if not, throw error message
 else
     error('No input data specified.');
-end
-
-if exist('DIM') % check whether DIM has been specified - if not, take maxium number of cloumns from DATA
-    DATA=DATA(:,1:DIM);
-else
-    DIM_size=size(DIM);
 end
 
 if exist('EMB') % check whether EMB has been specified - if not, set EMB = 1 (no surrogate embedding)
@@ -142,6 +139,9 @@ if exist('ZSCORE') % check whether ZSCORE has been specified - if not, don't zsc
     end
 else
 end
+
+tempDIM=size(DATA); % calculate dimensionality of input time-series
+DIM=tempDIM;
 
 if EMB > 1 % if EMB > 1, perform time-delayed embbedding
     for i = 1:EMB
