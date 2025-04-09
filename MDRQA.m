@@ -83,7 +83,7 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,EMB,DEL,NORM,RAD,ZSCORE)
 %  S.W.
 %
 % v1.2, 27. February 2018
-%  - fixed codting mistake for default setting of norm parameter
+%  - fixed coding mistake for default setting of norm parameter
 %  - removed piece of unused and out-commented code
 %  - added "Software info" section
 %  S.W.
@@ -94,6 +94,10 @@ function [RP, RESULTS, PARAMETERS, b]=mdrqa(DATA,EMB,DEL,NORM,RAD,ZSCORE)
 %    now calculated from the structure of the input directly (i.e.,
 %    dimensionality of the time-series = number of columns of the input data)
 %  S.W.
+% 
+% v1.4, 09 April 2025
+%  - fixed coding mistake for dimensionality calculation
+% S.W.
 
 % Software info:
 %
@@ -140,7 +144,7 @@ if exist('ZSCORE') % check whether ZSCORE has been specified - if not, don't zsc
 else
 end
 
-tempDIM=size(DATA); % calculate dimensionality of input time-series
+tempDIM=size(DATA,2); % calculate dimensionality of input time-series
 DIM=tempDIM;
 
 if EMB > 1 % if EMB > 1, perform time-delayed embbedding
