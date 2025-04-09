@@ -1,7 +1,7 @@
 %% Figure 3
 % This script reproduces Figure 3 in:
 %
-% Wallot, S., Roepstorff, A., & Mønster, D. (2016). Multidimensional
+% Wallot, S., Roepstorff, A., & MÃ¸nster, D. (2016). Multidimensional
 % Recurrence Quantification Analysis (MdRQA) for the analysis of
 % multidimensional time-series: A software implementation in MATLAB and its
 % application to group-level data in joint action. Frontiers in Psychology,
@@ -22,10 +22,13 @@
 %
 % By:
 % Sebastian Wallot, Max Planck Insitute for Empirical Aesthetics, Frankfurt, Germany
-% Dan Mønster, Aarhus University, Aarhus, Denmark
+% Dan MÃ¸nster, Aarhus University, Aarhus, Denmark
 %
 % July 2016.
 %
+% v1.1 09 April 2025
+% - Fixed mistake entering input parameters to MDRQA function at the bottom of the script.
+% S.W.
 
 fontsize = 14; % Font size to use in plots.
 
@@ -193,7 +196,7 @@ set_fonts(gcf, gca, fontsize);
 subplot(3,4,4+8)
 data = [xx, yy, zz];
 %(DATA,DIM,EMB,DEL,NORM,RAD,ZSCORE)
-[rp, mdrqa] = MDRQA(data, 3, 3, T, 'euc', 0.8*radius, 0);
+[rp, mdrqa] = MDRQA(data, 3, 3, 'euc', 0.8*radius, 0);
 rp = flipud(rp);
 spy(rp, 'k');
 axis xy;
